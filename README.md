@@ -53,7 +53,7 @@ declare(strict_types=1);
 
 namespace My\Own;
 
-use FireMidge\Identifier\Implementation\Uuid;
+use FireMidge\Identifier\Implementation\UuidId;
 use FireMidge\Identifier\UuidIdentifier;
 
 /**
@@ -61,7 +61,7 @@ use FireMidge\Identifier\UuidIdentifier;
  * @method static static generate()
  * @method static static convertFrom(UuidIdentifier $otherUuid)
  */
-class FileId extends Uuid
+class FileId extends UuidId
 {
 }
 ```

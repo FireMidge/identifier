@@ -5,9 +5,9 @@ namespace FireMidge\Identifier;
 
 interface Identifier
 {
-    public function toString() : string;
+    public function toString() : \string;
 
-    public function __toString() : string;
+    public function __toString() : \string;
 
-    public function isEqualTo(Identifier $id) : bool;
+    public function isEqualTo(Identifier $id) : \bool;
 }

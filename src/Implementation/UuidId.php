@@ -6,40 +6,46 @@ namespace FireMidge\Identifier\Implementation;
 use FireMidge\Identifier\Exception\InvalidUuid;
 use FireMidge\Identifier\Identifier;
 use FireMidge\Identifier\UuidIdentifier;
+use function chr;
+use function ord;
+use function vsprintf;
+use function str_split;
+use function bin2hex;
+use function preg_match;
 
-class Uuid implements UuidIdentifier
+class UuidId implements UuidIdentifier
 {
     private $uuid;
 
-    private function __construct(string $uuid)
+    private function __construct(\string $uuid)
     {
-        if (!static::isValid($uuid)) {
+        if (! static::isValid($uuid)) {
             throw new InvalidUuid($uuid);
         }
 
         $this->uuid = $uuid;
     }
 
-    public function toString() : string
+    public function toString() : \string
     {
         return $this->uuid;
     }
 
-    public function __toString() : string
+    public function __toString() : \string
     {
         return $this->uuid;
     }
 
-    public function isEqualTo(Identifier $id) : bool
+    public function isEqualTo(Identifier $id) : \bool
     {
-        if (! $id instanceof Uuid) {
+        if (! $id instanceof UuidId) {
             return false;
         }
 
         return $this->uuid === $id->toString();
     }
 
-    public static function fromString(string $uuid) : UuidIdentifier
+    public static function fromString(\string $uuid) : UuidIdentifier
     {
         return new static($uuid);
     }
@@ -59,7 +65,7 @@ class Uuid implements UuidIdentifier
         return static::fromString($otherUuidInstance->toString());
     }
 
-    private static function isValid(string $uuid) : bool
+    private static function isValid(\string $uuid) : \bool
     {
         $regEx = '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i';
 

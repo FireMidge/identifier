@@ -3,20 +3,17 @@ declare(strict_types=1);
 
 namespace FireMidge\Identifier\Implementation;
 
-
-namespace Application\Identifier;
-
 use FireMidge\Identifier\Identifier;
 use FireMidge\Identifier\IntIdentifier;
 
 /**
  * An integer identifier.
  */
-class Int implements IntIdentifier
+class IntegerId implements IntIdentifier
 {
     private $id;
 
-    private function __construct(int $id)
+    private function __construct(\int $id)
     {
         $this->id = $id;
     }
