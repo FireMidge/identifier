@@ -1,0 +1,21 @@
+{
+    "name": "firemidge/identifier",
+    "description": "Provides identifier classes (e.g. UUIDIdentifier)",
+    "type": "library",
+    "require": {
+        "php": ">=7.3"
+    },
+    "license": "GNU v3.0",
+    "authors": [
+        {
+            "name": "Jay Atkins",
+            "email": "jay001000@gmail.com"
+        }
+    ],
+    "autoload": {
+	    "psr-4": {
+	         "FireMidge\\Identifier\\": "src"
+	    }
+    },
+    "minimum-stability": "stable"
+}
