@@ -7,7 +7,7 @@ interface IntIdentifier extends Identifier
 {
     public static function convertFrom(IntIdentifier $otherIdentifier) : self;
 
-    public static function fromInt(\int $id) : self;
+    public static function fromInt(int $id) : self;
 
-    public function toInt() : \int;
+    public function toInt() : int;
 }

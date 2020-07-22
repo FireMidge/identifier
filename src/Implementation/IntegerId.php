@@ -13,7 +13,7 @@ class IntegerId implements IntIdentifier
 {
     private $id;
 
-    private function __construct(\int $id)
+    private function __construct(int $id)
     {
         $this->id = $id;
     }
