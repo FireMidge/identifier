@@ -65,7 +65,7 @@ class UuidId implements UuidIdentifier
         return static::fromString($otherUuidInstance->toString());
     }
 
-    private static function isValid(string $uuid) : \bool
+    private static function isValid(string $uuid) : bool
     {
         $regEx = '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i';
 
