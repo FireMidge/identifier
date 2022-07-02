@@ -14,7 +14,11 @@ In order to be able to run tests, go through the following steps to set up the D
 
 ### Run tests
 
+To run the unit tests:
 `docker-compose run lib vendor/bin/phpunit`
+
+To run mutation tests:
+`docker-compose run lib php infection.phar`
 
 #### Adding new tests
 

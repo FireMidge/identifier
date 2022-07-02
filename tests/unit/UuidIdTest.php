@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace FireMidge\Tests;
+namespace FireMidge\Tests\Identifier\Unit;
 
 use FireMidge\Identifier\Implementation\UuidId;
 use PHPUnit\Framework\TestCase;
