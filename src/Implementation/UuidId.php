@@ -50,6 +50,15 @@ class UuidId implements UuidIdentifier
         return new static($uuid);
     }
 
+    public static function fromStringOrNull(?string $uuid) : ?UuidIdentifier
+    {
+        if ($uuid === null) {
+            return null;
+        }
+
+        return new static($uuid);
+    }
+
     final public static function generate() : UuidIdentifier
     {
         $data = random_bytes(16);

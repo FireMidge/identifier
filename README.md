@@ -57,9 +57,10 @@ use FireMidge\Identifier\Implementation\UuidId;
 use FireMidge\Identifier\UuidIdentifier;
 
 /**
- * @method static static fromString(string $uuid)
- * @method static static generate()
- * @method static static convertFrom(UuidIdentifier $otherUuid)
+ * @method static static  fromString(string $uuid)
+ * @method static ?static fromStringOrNull(?string $uuid)
+ * @method static static  generate()
+ * @method static static  convertFrom(UuidIdentifier $otherUuid)
  */
 class FileId extends UuidId
 {
