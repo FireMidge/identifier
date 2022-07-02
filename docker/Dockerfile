@@ -3,9 +3,8 @@ FROM php:7.3-cli-alpine
 RUN \
     # Needed to install pecl libraries
     apk add g++ make autoconf && \
+    # PCOV provides code coverage reports and is required by Infection
     pecl install pcov && docker-php-ext-enable pcov
-#    # Install xdebug version compatible with PHP7.3. The earliest one is xdebug-2.7.
-#    pecl install xdebug
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 

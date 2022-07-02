@@ -50,5 +50,10 @@ You can also add a tag to a previous commit like so: `git tag -a v1.9 690c3c0e24
 
 #### Push the tag(s)!
 When pushing, don't forget to also push the tag(s):
-`git push origin --tags` or `git push origin v1.9`
+`git push origin HEAD --tags`
 
+#### Re-assign an annotated tag to another commit
+
+1. Delete the tag on the remote: `git push origin :refs/tags/v1.9`
+2. Then re-create the tag with the -f flag: `git tag -a v1.9 -m "Version 1.9: xyz" -f`
+3. Push the new commit with the updated tag to the remote: `git push origin HEAD --tags`

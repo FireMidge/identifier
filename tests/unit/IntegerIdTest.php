@@ -5,7 +5,6 @@ namespace FireMidge\Tests;
 
 use FireMidge\Identifier\Exception\NotAnInteger;
 use FireMidge\Identifier\Implementation\IntegerId;
-use FireMidge\Identifier\Implementation\UuidId;
 use PHPUnit\Framework\TestCase;
 
 class IntegerIdTest extends TestCase
