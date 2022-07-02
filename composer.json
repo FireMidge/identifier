@@ -15,7 +15,7 @@
     "autoload": {
 	    "psr-4": {
 	         "FireMidge\\Identifier\\": "src",
-		     "FireMidge\\Tests\\": "tests"
+		     "FireMidge\\Tests\\Identifier\\Unit\\": "tests/unit"
 	    }
     },
     "minimum-stability": "stable",
