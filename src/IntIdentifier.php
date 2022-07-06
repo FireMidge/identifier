@@ -5,9 +5,9 @@ namespace FireMidge\Identifier;
 
 interface IntIdentifier extends Identifier
 {
-    public static function convertFrom(IntIdentifier $otherIdentifier) : self;
+    public static function convertFrom(IntIdentifier $otherIdentifier) : static;
 
-    public static function fromInt(int $id) : self;
+    public static function fromInt(int $id) : static;
 
     public function toInt() : int;
 }

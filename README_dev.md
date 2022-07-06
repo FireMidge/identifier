@@ -37,6 +37,21 @@ Use the --dev option when requiring new dev dependencies via composer:
 
 Run `docker-compose run lib composer validate` to make sure `composer.json` is still valid.
 
+### Update CHANGELOG.md
+
+Add a line in CHANGELOG.md. Make sure you place the newest version on top of the log.
+
+If there are versions missing in CHANGELOG, add them. These commands should help:
+
+`git tag -n`
+: Shows a list of existing (annotated) tags with their descriptions.
+
+`git rev-list -n 1 v1.0`
+: Returns the hash of the commit tagged with "v1.0".
+
+`git show 338a601819077e11fdc439e73079d49dd08319ca`
+: Using the commit hash from the previous command, you can see what's changed in it as well as what its commit message was.
+
 ### Tag your commit
 
 #### View existing tags
@@ -65,3 +80,4 @@ When pushing, don't forget to also push the tag(s):
 1. Delete the tag on the remote: `git push origin :refs/tags/v1.9`
 2. Then re-create the tag with the -f flag: `git tag -a v1.9 -m "Version 1.9: xyz" -f`
 3. Push the new commit with the updated tag to the remote: `git push origin HEAD --tags`
+
