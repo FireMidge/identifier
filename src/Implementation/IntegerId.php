@@ -12,19 +12,19 @@ use FireMidge\Identifier\IntIdentifier;
  */
 class IntegerId implements IntIdentifier
 {
-    private $id;
+    private int $id;
 
     private function __construct(int $id)
     {
         $this->id = $id;
     }
 
-    public static function fromInt(int $id) : IntIdentifier
+    public static function fromInt(int $id) : static
     {
         return new static($id);
     }
 
-    public static function fromIntOrNull(?int $id) : ?IntIdentifier
+    public static function fromIntOrNull(?int $id) : ?static
     {
         if ($id === null) {
             return null;
@@ -33,7 +33,7 @@ class IntegerId implements IntIdentifier
         return new static($id);
     }
 
-    public static function fromString(string $id) : IntIdentifier
+    public static function fromString(string $id) : static
     {
         if ((string) (int) $id !== $id) {
             throw new NotAnInteger($id);
@@ -42,7 +42,7 @@ class IntegerId implements IntIdentifier
         return new static((int) $id);
     }
 
-    public static function fromStringOrNull(?string $id) : ?IntIdentifier
+    public static function fromStringOrNull(?string $id) : ?static
     {
         if ($id === null) {
             return null;
@@ -51,7 +51,7 @@ class IntegerId implements IntIdentifier
         return static::fromString($id);
     }
 
-    public static function convertFrom(IntIdentifier $otherIdentifier) : IntIdentifier
+    public static function convertFrom(IntIdentifier $otherIdentifier) : static
     {
         return new static($otherIdentifier->toInt());
     }

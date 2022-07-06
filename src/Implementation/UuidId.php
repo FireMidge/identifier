@@ -15,7 +15,7 @@ use function preg_match;
 
 class UuidId implements UuidIdentifier
 {
-    private $uuid;
+    private string $uuid;
 
     private function __construct(string $uuid)
     {
@@ -45,12 +45,12 @@ class UuidId implements UuidIdentifier
         return $this->uuid === $id->toString();
     }
 
-    public static function fromString(string $uuid) : UuidIdentifier
+    public static function fromString(string $uuid) : static
     {
         return new static($uuid);
     }
 
-    public static function fromStringOrNull(?string $uuid) : ?UuidIdentifier
+    public static function fromStringOrNull(?string $uuid) : ?static
     {
         if ($uuid === null) {
             return null;
@@ -59,7 +59,7 @@ class UuidId implements UuidIdentifier
         return new static($uuid);
     }
 
-    final public static function generate() : UuidIdentifier
+    final public static function generate() : static
     {
         $data = random_bytes(16);
 
@@ -69,7 +69,7 @@ class UuidId implements UuidIdentifier
         return new static(vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4)));
     }
 
-    public static function convertFrom(UuidIdentifier $otherUuidInstance) : UuidIdentifier
+    public static function convertFrom(UuidIdentifier $otherUuidInstance) : static
     {
         return static::fromString($otherUuidInstance->toString());
     }
