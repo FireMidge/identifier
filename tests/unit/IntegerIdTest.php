@@ -7,6 +7,10 @@ use FireMidge\Identifier\Exception\NotAnInteger;
 use FireMidge\Identifier\Implementation\IntegerId;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \FireMidge\Identifier\Implementation\IntegerId
+ * @covers \FireMidge\Identifier\Exception\NotAnInteger
+ */
 class IntegerIdTest extends TestCase
 {
     public function validIntegerProvider() : array

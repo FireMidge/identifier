@@ -7,6 +7,9 @@ use FireMidge\Identifier\Implementation\IntegerId;
 use FireMidge\Identifier\Implementation\UuidId;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \FireMidge\Identifier\Implementation\UuidId
+ */
 class UuidIdEqualityTest extends TestCase
 {
     /**

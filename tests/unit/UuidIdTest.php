@@ -7,6 +7,10 @@ use FireMidge\Identifier\Implementation\UuidId;
 use PHPUnit\Framework\TestCase;
 use FireMidge\Identifier\Exception\InvalidUuid;
 
+/**
+ * @covers \FireMidge\Identifier\Implementation\UuidId
+ * @covers \FireMidge\Identifier\Exception\InvalidUuid
+ */
 class UuidIdTest extends TestCase
 {
     public function validUuidProvider() : array
@@ -149,5 +153,14 @@ class UuidIdTest extends TestCase
         $instance      = UuidId::fromString($generatedUuid->toString());
 
         $this->assertSame($generatedUuid->toString(), $instance->toString());
+    }
+
+    public function testGenerateReturnsValidUuid4Format() : void
+    {
+        $generatedUuid = UuidId::generate();
+        $this->assertSame(1, preg_match(
+            '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/',
+            $generatedUuid->toString()
+        ), 'Expected regular expression to match generated UUID');
     }
 }
