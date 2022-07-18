@@ -3,6 +3,11 @@
 Works with PHP 8.1.
 
 
+### v2.0.1
+
+Dev: Brought unit test coverage to 100%. Remaining escaped mutants are false positives. Added Quality Control section to README.md.
+
+
 ### v2.0
 
 Dev: Upgrade to PHP 8.1. Note that anything below PHP 8.1 is no longer supported.
