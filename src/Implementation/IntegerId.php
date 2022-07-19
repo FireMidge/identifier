@@ -12,12 +12,7 @@ use FireMidge\Identifier\IntIdentifier;
  */
 class IntegerId implements IntIdentifier
 {
-    private int $id;
-
-    private function __construct(int $id)
-    {
-        $this->id = $id;
-    }
+    private function __construct(private int $id) {}
 
     public static function fromInt(int $id) : static
     {
@@ -66,13 +61,34 @@ class IntegerId implements IntIdentifier
         return (string) $this->id;
     }
 
-    public function isEqualTo(Identifier $id) : bool
+    /**
+     * If $strictCheck is true, this method will only return true if $id
+     * does not just have the same value but is also of the same concrete
+     * Identifier class as $this.
+     * If $strictCheck is false, this method returns true if $id has the same value
+     * regardless of concrete class.
+     */
+    public function isEqualTo(Identifier $id, bool $strictCheck = true) : bool
     {
-        if (! $id instanceof IntIdentifier) {
+        if ($strictCheck && ! is_a($id, static::class)) {
             return false;
         }
 
-        return $id->toInt() === $this->id;
+        if (! method_exists($id, 'toInt')) {
+            return false;
+        }
+
+        return $this->id === $id->toInt();
+    }
+
+    /**
+     * If $strictCheck is true, this method returns false if $id either has a different
+     * value or is of a different concrete Identifier class.
+     * If $strictCheck is false, this method returns false only if $id has a different value.
+     */
+    public function isNotEqualTo(Identifier $id, bool $strictCheck = true) : bool
+    {
+        return ! $this->isEqualTo($id, $strictCheck);
     }
 
     public function toInt() : int

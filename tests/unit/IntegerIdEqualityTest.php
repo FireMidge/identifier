@@ -5,6 +5,8 @@ namespace FireMidge\Tests\Identifier\Unit;
 
 use FireMidge\Identifier\Implementation\IntegerId;
 use FireMidge\Identifier\Implementation\UuidId;
+use FireMidge\Tests\Identifier\Unit\Classes\OtherIntIdentifier;
+use FireMidge\Tests\Identifier\Unit\Classes\OtherStringIdentifier;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,8 +16,6 @@ class IntegerIdEqualityTest extends TestCase
 {
     /**
      * Testing that two instances of the same class can be compared with each other.
-     *
-     * @covers \FireMidge\Identifier\Implementation\IntegerId::isEqualTo
      */
     public function testInstancesOfSameClassAreEqualUsingFromString() : void
     {
@@ -26,12 +26,13 @@ class IntegerIdEqualityTest extends TestCase
 
         $this->assertTrue($instance1->isEqualTo($instance2));
         $this->assertTrue($instance2->isEqualTo($instance1));
+
+        $this->assertFalse($instance1->isNotEqualTo($instance2));
+        $this->assertFalse($instance2->isNotEqualTo($instance1));
     }
 
     /**
      * Testing that two instances of the same class can be compared with each other.
-     *
-     * @covers \FireMidge\Identifier\Implementation\IntegerId::isEqualTo
      */
     public function testInstancesOfSameClassAreEqual() : void
     {
@@ -42,12 +43,13 @@ class IntegerIdEqualityTest extends TestCase
 
         $this->assertTrue($instance1->isEqualTo($instance2));
         $this->assertTrue($instance2->isEqualTo($instance1));
+
+        $this->assertFalse($instance1->isNotEqualTo($instance2));
+        $this->assertFalse($instance2->isNotEqualTo($instance1));
     }
 
     /**
      * Testing that two instances of the same class can be compared with each other.
-     *
-     * @covers \FireMidge\Identifier\Implementation\IntegerId::isEqualTo
      */
     public function testInstancesOfSameClassAreEqualUsingBothFromIntAndFromString() : void
     {
@@ -56,48 +58,85 @@ class IntegerIdEqualityTest extends TestCase
 
         $this->assertTrue($instance1->isEqualTo($instance2));
         $this->assertTrue($instance2->isEqualTo($instance1));
+
+        $this->assertFalse($instance1->isNotEqualTo($instance2));
+        $this->assertFalse($instance2->isNotEqualTo($instance1));
     }
 
     /**
      * Testing that instances of two different IntId classes can be compared with each other.
-     * NOTE that this is likely going to change in the future but will be released
-     * as a breaking change with a new major version.
-     *
-     * @covers \FireMidge\Identifier\Implementation\IntegerId::isEqualTo
+     * They are considered equal only when strict check is false.
      */
-    public function testInstancesOfDifferentIntClassAreEqualUsingFromString() : void
+    public function testInstancesOfDifferentIntClassAreEqualUsingFromStringWithNoStrictCheck() : void
     {
         $value = '8756';
 
         $instanceA = CId::fromString($value);
         $instanceB = DId::fromString($value);
 
-        $this->assertTrue($instanceA->isEqualTo($instanceB));
-        $this->assertTrue($instanceB->isEqualTo($instanceA));
+        $this->assertTrue($instanceA->isEqualTo($instanceB, false));
+        $this->assertTrue($instanceB->isEqualTo($instanceA, false));
+
+        $this->assertFalse($instanceA->isNotEqualTo($instanceB, false));
+        $this->assertFalse($instanceB->isNotEqualTo($instanceA, false));
     }
 
     /**
      * Testing that instances of two different IntId classes can be compared with each other.
-     * NOTE that this is likely going to change in the future but will be released
-     * as a breaking change with a new major version.
-     *
-     * @covers \FireMidge\Identifier\Implementation\IntegerId::isEqualTo
+     * They are not considered equal when performing the default strict check.
      */
-    public function testInstancesOfDifferentIntClassAreEqual() : void
+    public function testInstancesOfDifferentIntClassAreNotEqualUsingFromString() : void
+    {
+        $value = '8756';
+
+        $instanceA = CId::fromString($value);
+        $instanceB = DId::fromString($value);
+
+        $this->assertFalse($instanceA->isEqualTo($instanceB));
+        $this->assertFalse($instanceB->isEqualTo($instanceA));
+
+        $this->assertTrue($instanceA->isNotEqualTo($instanceB));
+        $this->assertTrue($instanceB->isNotEqualTo($instanceA));
+    }
+
+    /**
+     * Testing that instances of two different IntId classes can be compared with each other.
+     * They are considered equal only when strict check is false.
+     */
+    public function testInstancesOfDifferentIntClassAreEqualWithoutStrictCheck() : void
     {
         $value = 8756;
 
         $instanceA = CId::fromInt($value);
         $instanceB = DId::fromInt($value);
 
-        $this->assertTrue($instanceA->isEqualTo($instanceB));
-        $this->assertTrue($instanceB->isEqualTo($instanceA));
+        $this->assertTrue($instanceA->isEqualTo($instanceB, false));
+        $this->assertTrue($instanceB->isEqualTo($instanceA, false));
+
+        $this->assertFalse($instanceA->isNotEqualTo($instanceB, false));
+        $this->assertFalse($instanceB->isNotEqualTo($instanceA, false));
+    }
+
+    /**
+     * Testing that instances of two different IntId classes can be compared with each other.
+     * They are not considered equal when performing the default strict check.
+     */
+    public function testInstancesOfDifferentIntClassAreNotEqual() : void
+    {
+        $value = 8756;
+
+        $instanceA = CId::fromInt($value);
+        $instanceB = DId::fromInt($value);
+
+        $this->assertFalse($instanceA->isEqualTo($instanceB));
+        $this->assertFalse($instanceB->isEqualTo($instanceA));
+
+        $this->assertTrue($instanceA->isNotEqualTo($instanceB));
+        $this->assertTrue($instanceB->isNotEqualTo($instanceA));
     }
 
     /**
      * Testing that instances of two different Identifier classes are not equal.
-     *
-     * @covers \FireMidge\Identifier\Implementation\IntegerId::isEqualTo
      */
     public function testInstancesOfDifferentIdClassesAreEqual() : void
     {
@@ -106,12 +145,13 @@ class IntegerIdEqualityTest extends TestCase
 
         $this->assertFalse($instance1->isEqualTo($instance2));
         $this->assertFalse($instance2->isEqualTo($instance1));
+
+        $this->assertTrue($instance1->isNotEqualTo($instance2));
+        $this->assertTrue($instance2->isNotEqualTo($instance1));
     }
 
     /**
      * Testing that instances of two different Identifier classes are not equal.
-     *
-     * @covers \FireMidge\Identifier\Implementation\IntegerId::isEqualTo
      */
     public function testInstancesOfDifferentIdClassesAreEqualUsingFromString() : void
     {
@@ -120,21 +160,25 @@ class IntegerIdEqualityTest extends TestCase
 
         $this->assertFalse($instance1->isEqualTo($instance2));
         $this->assertFalse($instance2->isEqualTo($instance1));
+
+        $this->assertTrue($instance1->isNotEqualTo($instance2));
+        $this->assertTrue($instance2->isNotEqualTo($instance1));
     }
 
     /**
      * Testing that instances of the same Int ID class but with different values are
      * not equal to one another.
-     *
-     * @covers \FireMidge\Identifier\Implementation\IntegerId::isEqualTo
      */
     public function testInstancesOfDifferentIntsAreNotEqualUsingFromString() : void
     {
         $instance1 = CId::fromString('10');
         $instance2 = CId::fromString('11');
 
-        $this->assertFalse($instance1->isEqualTo($instance2));
-        $this->assertFalse($instance2->isEqualTo($instance1));
+        $this->assertFalse($instance1->isEqualTo($instance2), 'Instance1 -> Instance2');
+        $this->assertFalse($instance2->isEqualTo($instance1), 'Instance2 -> Instance1');
+
+        $this->assertTrue($instance1->isNotEqualTo($instance2));
+        $this->assertTrue($instance2->isNotEqualTo($instance1));
     }
 
     /**
@@ -150,6 +194,9 @@ class IntegerIdEqualityTest extends TestCase
 
         $this->assertFalse($instance1->isEqualTo($instance2));
         $this->assertFalse($instance2->isEqualTo($instance1));
+
+        $this->assertTrue($instance1->isNotEqualTo($instance2));
+        $this->assertTrue($instance2->isNotEqualTo($instance1));
     }
 
     /**
@@ -165,6 +212,9 @@ class IntegerIdEqualityTest extends TestCase
 
         $this->assertFalse($instance1->isEqualTo($instance2));
         $this->assertFalse($instance2->isEqualTo($instance1));
+
+        $this->assertTrue($instance1->isNotEqualTo($instance2));
+        $this->assertTrue($instance2->isNotEqualTo($instance1));
     }
 
     /**
@@ -198,23 +248,93 @@ class IntegerIdEqualityTest extends TestCase
 
         $this->assertTrue($instance2->isEqualTo($instance3));
         $this->assertTrue($instance3->isEqualTo($instance2));
+
+        $this->assertFalse($instance2->isNotEqualTo($instance3));
+        $this->assertFalse($instance3->isNotEqualTo($instance2));
     }
 
     /**
-     * Testing that an instance which has been converted from AId to BId
-     * is equal to another BId instance with the same value.
-     * NOTE this is likely going to change in another major version.
-     *
-     * @covers \FireMidge\Identifier\Implementation\IntegerId::convertFrom
-     * @covers \FireMidge\Identifier\Implementation\IntegerId::isEqualTo
+     * Testing that an instance which has been converted from CId to DId
+     * is equal to another DId instance with the same value but only with strict check disabled.
      */
-    public function testConvertedInstanceIsEqualToOldInstance() : void
+    public function testConvertedInstanceIsNotEqualToOldInstance() : void
     {
         $instance1 = CId::fromInt(7065);
         $instance2 = DId::convertFrom($instance1);
 
-        $this->assertTrue($instance2->isEqualTo($instance1));
-        $this->assertTrue($instance1->isEqualTo($instance2));
+        $this->assertFalse($instance2->isEqualTo($instance1));
+        $this->assertFalse($instance1->isEqualTo($instance2));
+
+        $this->assertTrue($instance2->isNotEqualTo($instance1));
+        $this->assertTrue($instance1->isNotEqualTo($instance2));
+    }
+
+    /**
+     * Testing that an instance which has been converted from CId to DId
+     * is equal to another DId instance with the same value but only with strict check disabled.
+     */
+    public function testConvertedInstanceIsEqualToOldInstanceWithoutStrictCheck() : void
+    {
+        $instance1 = CId::fromInt(7065);
+        $instance2 = DId::convertFrom($instance1);
+
+        $this->assertTrue($instance2->isEqualTo($instance1, false));
+        $this->assertTrue($instance1->isEqualTo($instance2, false));
+
+        $this->assertFalse($instance2->isNotEqualTo($instance1, false));
+        $this->assertFalse($instance1->isNotEqualTo($instance2, false));
+    }
+
+    public function testComparingWithOtherIntIdentifierNotEqual() : void
+    {
+        $value = '500';
+
+        $instance1 = IntegerId::fromString($value);
+        $instance2 = new OtherIntIdentifier($value);
+
+        $this->assertFalse($instance1->isEqualTo($instance2));
+        $this->assertTrue($instance1->isNotEqualTo($instance2));
+    }
+
+    public function testComparingWithOtherIntIdentifierEqualWithoutStrictCheck() : void
+    {
+        $value = '500';
+
+        $instance1 = IntegerId::fromString($value);
+        $instance2 = new OtherIntIdentifier($value);
+
+        $this->assertTrue($instance1->isEqualTo($instance2, false));
+        $this->assertFalse($instance1->isNotEqualTo($instance2, false));
+    }
+
+    /**
+     * Test that an object of another class implementing Identifier, but which does not have a toInt
+     * method, is not considered equal even when they have the same string value.
+     */
+    public function testComparingWithOtherStringIdentifierNotEqualWithoutStrictCheck() : void
+    {
+        $value = '500';
+
+        $instance1 = IntegerId::fromString($value);
+        $instance2 = new OtherStringIdentifier($value);
+
+        $this->assertFalse($instance1->isEqualTo($instance2, false));
+        $this->assertTrue($instance1->isNotEqualTo($instance2, false));
+    }
+
+    /**
+     * Test that an object of another class implementing Identifier, but which does not have a toInt
+     * method, is not considered equal even when they have the same string value.
+     */
+    public function testComparingWithOtherStringIdentifierNotEqual() : void
+    {
+        $value = '500';
+
+        $instance1 = IntegerId::fromString($value);
+        $instance2 = new OtherStringIdentifier($value);
+
+        $this->assertFalse($instance1->isEqualTo($instance2));
+        $this->assertTrue($instance1->isNotEqualTo($instance2));
     }
 }
 

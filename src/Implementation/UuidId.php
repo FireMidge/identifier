@@ -15,15 +15,11 @@ use function preg_match;
 
 class UuidId implements UuidIdentifier
 {
-    private string $uuid;
-
-    private function __construct(string $uuid)
+    private function __construct(private string $uuid)
     {
         if (! static::isValid($uuid)) {
             throw new InvalidUuid($uuid);
         }
-
-        $this->uuid = $uuid;
     }
 
     public function toString() : string
@@ -36,13 +32,30 @@ class UuidId implements UuidIdentifier
         return $this->uuid;
     }
 
-    public function isEqualTo(Identifier $id) : bool
+    /**
+     * If $strictCheck is true, this method will only return true if $id
+     * does not just have the same value but is also of the same concrete
+     * Identifier class as $this.
+     * If $strictCheck is false, this method returns true if $id has the same value
+     * regardless of concrete class.
+     */
+    public function isEqualTo(Identifier $id, bool $strictCheck = true) : bool
     {
-        if (! $id instanceof UuidId) {
+        if ($strictCheck && ! is_a($id, static::class)) {
             return false;
         }
 
         return $this->uuid === $id->toString();
+    }
+
+    /**
+     * If $strictCheck is true, this method returns false if $id either has a different
+     * value or is of a different concrete Identifier class.
+     * If $strictCheck is false, this method returns false only if $id has a different value.
+     */
+    public function isNotEqualTo(Identifier $id, bool $strictCheck = true) : bool
+    {
+        return ! $this->isEqualTo($id, $strictCheck);
     }
 
     public static function fromString(string $uuid) : static
