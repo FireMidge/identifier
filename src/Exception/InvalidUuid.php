@@ -8,7 +8,7 @@ use Throwable;
 
 class InvalidUuid extends RuntimeException
 {
-    public function __construct(string $uuid, int $code = 0, Throwable $previous = null)
+    public function __construct(string $uuid, int $code = 0, ?Throwable $previous = null)
     {
         $message = sprintf('"%s" is not a valid UUID', $uuid);
         parent::__construct($message, $code, $previous);
